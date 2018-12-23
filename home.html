@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title> Home Page</title>
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="/static/home.css">
+        <style>
+            .container-fluid {
+              padding-top: 0px;
+              padding-bottom: 0px;
+              position: relative;
+              margin-top: 90px;
+              /* negative value of footer height */
+              height: 120px;
+            }
+
+            .bg-4 {
+              background-color: #2f4f4f;
+              color: black;
+              font-size: 25px;
+              padding-top: 40px;
+            }
+            .warning {
+              border: 1px solid #cecfd5;
+              border-left: 6px solid #2f4f4f;
+              border-right: 6px solid #2f4f4f;
+              font-size: 11px;
+              text-transform: uppercase;
+            }
+
+            .btn:hover {background-color: #52B39F}
+
+            .btn {background-color: #2f4f4f; color:white; font-size: 15px; padding: 10px 20px;
+            font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;}
+
+            table {
+              border-collapse: separate;
+              border-spacing: 2;
+              color: #4a4a4d;
+              font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+            th,
+            td {
+              padding: 10px 15px;
+              vertical-align: middle;
+            }
+            th
+            {
+              text-align: center;
+            }
+            thead {
+              background: #2f4f4f;
+              background: linear-gradient(#2f4f4f, #298874);
+              color: #fff;
+              font-size: 11px;
+              text-transform: uppercase;
+            }
+            th:first-child {
+              text-align: left;
+              text-align: center;
+            }
+            th:last-child {
+              text-align: center;
+            }
+
+            td {
+              border-right: 1px solid black;
+              border-bottom: 1px solid #2f4f4f;
+            }
+            td:first-child {
+              border-left: 1px solid #2f4f4f;
+            }
+            .book-title {
+              color: black;
+              display: block;
+              border-bottom: 1px solid #2f4f4f;
+            }
+        </style>
+    </head>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+
+      <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#qty1").on('input', function(){
+                var l1value = $(this).val();
+                var price = '{{ predicted_price }}';
+                document.getElementById("price1").innerHTML =  l1value * price;				
+            });
+        });
+    </script>
+
+    <body>
+    <!--<h4>Please Register to Get the tutorials</h4>-->
+    <form method="POST">
+
+        <div class="jumbotron jumbotron-fluid" style="background: #2f4f4f;">
+          <div class="container">
+            <h1 class="display-2"> <span class="glyphicon glyphicon-shopping-cart"></span>  Big Basket</h1>
+            <p class="lead">Cost Price Predictor</p>
+          </div>
+        </div>
+
+        <div class="container">
+        <table class="width:100% col-xs-11" style="border: 1px solid #2f4f4f; border-left: 6px solid #2f4f4f;
+              border-right: 6px solid #2f4f4f;">
+        <tr class="col-xs-12">
+
+            <th style="padding-right: 0px"><label for="Name">Product Name:&nbsp;&nbsp;</label></th>
+            <th style="padding-right: 10px"><select name= productname method="GET" action="/" class="form-control" data-show-subtext="true" data-live-search="true">
+                <option value= "{{item}}" disabled selected> select an option </option>
+                    {% for item in Fourthlist %}
+                    <option value= "{{item}}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+        </table>
+        <div class="col-xs-1" id="btn1">
+            <br/>
+            <button style="margin-left:30px; margin-top:-14px;" class="btn">SUBMIT</button>
+        </div>
+        </div><br/><br/>
+    </form>
+
+
+        <div class="container">
+            <div class="col-xs-3">
+            <table>
+                <thead id="thead">
+                <tr id="tr">
+                    <th scope="col" colspan="1">Date</th>
+                    <th scope="col" >Qty</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <p style = "font-style = bold";>
+                        {% if not itemname %}
+                            <p> No Item Selected  </p>
+                        {% else %}
+                            <p> {{ itemname }} </p>
+                        {% endif %}
+                    </p>
+
+                    <td>
+                      {% for item in dates[16:27] %}
+                        <strong class="book-title">{{ item }}</strong>
+                      {% endfor %}
+                    </td>
+                    <td>
+                      {% for item in quantity[16:27] %}
+                        <strong class="book-title">{{ item }}</strong>
+                      {% endfor %}
+                    </td>
+
+                    <td>
+                      {% for item in price[16:27] %}
+                        <strong class="book-title">{{ item }}</strong>
+                        {% endfor %}
+                    </td>
+                </tbody>
+
+            </table>
+        </div>
+
+            <div class="col-xs-3" style="margin-left:40px;">
+
+                <div class="warning">
+
+                <table style="padding-top:10px; padding-bottom:10px; border-bottom:1px solid #395870;"><tr>
+                <th><label style="color: black;" for="Name">Purchase Qty:&nbsp;</label></th>
+                <th style="padding-left:0px;"><input  type="text" id="qty1" name="qty" class="form-control" title="Please enter only numbers starts from 1" pattern="(^[1-9]*$)">
+                </tr>
+                </table><br/>
+                <table style="padding-bottom:10px;">
+                    <tr><th><label title="Quantity * Predicted_Price"  style="color: black;" for="Name">Predicted Price (INR):  <span id="price1"> </span> </label></th></tr>
+                </th>
+                </table></div>
+                </div>
+
+            <div class="col-xs-3" style="border: 1px solid grey; margin-left:50px; height: 350px; width: 400px; width: 35%;">
+                    <!--<h1>Simple Line Chart</h1>-->
+                        <!-- bar chart canvas element -->
+                        <canvas id="myChart" width="300" height="280"></canvas>
+    <script type="text/javascript">
+        var chartData = {
+          labels : [{% for item in dates[-26:] %}
+                     "{{item}}",
+                    {% endfor %}],
+          datasets : [{
+              label: 'Price',
+              fill: true,
+              lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data : [{% for item in price[-26:] %}
+                        {{item}},
+                      {% endfor %}],
+              spanGaps: false
+          }]
+        }
+
+        // get chart canvas
+        var ctx = document.getElementById("myChart").getContext("2d");
+
+        // create the chart using the chart canvas
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: chartData,
+        });
+    </script>
+            </div>
+    </div>
+
+
+    <footer class="container-fluid bg-4 text-center " style="background: #2f4f4f;">
+        <p>Powered by Prophet</p>
+    </footer>
+    </body>
+</html>
